@@ -4,10 +4,12 @@
   apt: >
     name={{ item }}
     state=present
+    update_cache=yes
   with_items:
     - "linux-image-{{ ansible_kernel }}"
     - apt-transport-https
     - python-virtualenv
+    - python-pip
 
 - name: adds Docker repository key
   apt_key: >
@@ -33,3 +35,10 @@
     name="docker-py"
     version="1.7.0"
     virtualenv="{{ ansible_env.HOME }}/venv"
+  when: (test_helper is undefined or test_helper|bool == false )
+
+- name: installs docker-py system wide via pip
+  pip: >
+    name="docker-py"
+    version="1.7.0"
+  when: (test_helper is defined or test_helper|bool == true )
