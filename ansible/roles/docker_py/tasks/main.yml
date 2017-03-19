@@ -30,15 +30,15 @@
     enabled=yes
     state=started
 
-- name: Install docker-py via pip in virtualenv
+- name: installs docker-py via pip in virtualenv
   pip: >
     name="docker-py"
     version="1.7.0"
     virtualenv="{{ ansible_env.HOME }}/venv"
-  when: (test_helper is undefined or test_helper|bool == false )
+  when: ( test_helper is undefined or test_helper|bool == false )
 
 - name: installs docker-py system wide via pip
   pip: >
     name="docker-py"
     version="1.7.0"
-  when: (test_helper is defined or test_helper|bool == true )
+  when: ( test_helper is defined or test_helper|bool == true )
